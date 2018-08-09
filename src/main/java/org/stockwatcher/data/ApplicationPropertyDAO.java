@@ -18,8 +18,9 @@
 package org.stockwatcher.data;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.UUID;
+
+import com.datastax.driver.core.LocalDate;
 
 /**
  * DAO interface that provides methods for reading application properties.
@@ -30,7 +31,7 @@ public interface ApplicationPropertyDAO {
 	boolean getBoolean(String propertyName) throws DAOException;
 	int getInt(String propertyName) throws DAOException;
 	long getLong(String propertyName) throws DAOException;
-	Date getDate(String propertyName) throws DAOException;
+	LocalDate getDate(String propertyName) throws DAOException;
 	float getFloat(String propertyName) throws DAOException;
 	double getDouble(String propertyName) throws DAOException;
 	BigDecimal getDecimal(String propertyName) throws DAOException;

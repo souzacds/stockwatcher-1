@@ -34,6 +34,7 @@ import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
 import com.datastax.driver.core.BoundStatement;
+import com.datastax.driver.core.LocalDate;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.ResultSetFuture;
 import com.datastax.driver.core.Row;
@@ -73,7 +74,7 @@ public class DailySummaryGenerator {
 
 	@ManagedOperation(description="Generates daily summaries for all active stocks")
 	public void generateDailySummaries() {
-		Date tradeDate = session.execute(selectLastTradeDate.bind())
+		LocalDate tradeDate = session.execute(selectLastTradeDate.bind())
 			.one().getDate("property_value_timestamp");
 
 		LOGGER.info("Started generating daily summaries for {}", 
@@ -113,7 +114,7 @@ public class DailySummaryGenerator {
 		List<ResultSetFuture> insertFutures = new ArrayList<ResultSetFuture>();
 		for(ResultSetFuture future : selectFutures) {
 			String symbol = null;
-			Date tradeDate = null;
+			LocalDate tradeDate = null;
 			BigDecimal open = BigDecimal.ZERO;
 			BigDecimal high = BigDecimal.ZERO;
 			BigDecimal low = BigDecimal.valueOf(Long.MAX_VALUE);
@@ -146,7 +147,7 @@ public class DailySummaryGenerator {
 		return insertFutures;
 	}
 
-	private ResultSetFuture insert(String symbol, Date tradeDate, 
+	private ResultSetFuture insert(String symbol, LocalDate tradeDate, 
 		BigDecimal open, BigDecimal high, BigDecimal low, BigDecimal close, 
 		int volume) {
 		BoundStatement bs = insertDailySummary.bind();

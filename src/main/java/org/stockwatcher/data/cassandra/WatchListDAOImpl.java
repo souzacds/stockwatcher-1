@@ -41,6 +41,7 @@ import org.stockwatcher.domain.WatchList;
 import org.stockwatcher.domain.WatchListItem;
 
 import com.datastax.driver.core.BoundStatement;
+import com.datastax.driver.core.LocalDate;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.RegularStatement;
 import com.datastax.driver.core.Row;
@@ -305,7 +306,8 @@ public class WatchListDAOImpl extends CassandraDAO implements CassandraWatchList
 		}
 
 		// We assume that the watchlist id is valid
-		Date now = new Date();
+		Date d = new Date();
+		LocalDate now = LocalDate.fromMillisSinceEpoch(d.getTime());
 		try {
 			BoundStatement bs = updateWatchListById.bind();
 			bs.setString("display_name", watchList.getDisplayName());
@@ -317,7 +319,7 @@ public class WatchListDAOImpl extends CassandraDAO implements CassandraWatchList
 		} catch(DriverException e) {
 			throw new DAOException(e);
 		}
-		watchList.setUpdated(now);
+		watchList.setUpdated(d);
 	}
 
 	@Override
@@ -346,7 +348,8 @@ public class WatchListDAOImpl extends CassandraDAO implements CassandraWatchList
 			 * watch list, otherwise we upsert and lose the original created date.
 			 * We do this using CAS in the prepared statement (using IF NOT EXISTS on the INSERT)
 			 *******/
-			Date now = new Date();
+			Date d = new Date();
+			LocalDate now = LocalDate.fromMillisSinceEpoch(d.getTime());
 			BoundStatement bs = insertWatchListItem.bind();
 			bs.setUUID("watchlist_id", id);
 			bs.setString("stock_symbol", stockSymbol);

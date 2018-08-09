@@ -25,6 +25,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Repository;
 
+import com.datastax.driver.core.LocalDate;
 import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.Row;
 
@@ -96,12 +97,12 @@ public class ApplicationPropertyDAOImpl extends CassandraDAO implements Applicat
 	}
 
 	@Override
-	public Date getDate(String propertyName) {
+	public LocalDate getDate(String propertyName) {
 		return getDate(getDefaultOptions(), propertyName);
 	}
 
 	@Override
-	public Date getDate(StatementOptions options, String propertyName) {
+	public LocalDate getDate(StatementOptions options, String propertyName) {
 		return getRow(options, selectTimestampProperty, propertyName).getDate(0);
 	}
 

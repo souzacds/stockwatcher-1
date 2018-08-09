@@ -52,6 +52,8 @@ import org.stockwatcher.domain.Industry;
 import org.stockwatcher.domain.Trade;
 import org.stockwatcher.domain.User;
 
+import com.datastax.driver.core.LocalDate;
+
 /**
  * Controller class for all Stock-related web requests. Uses DAO classes to 
  * interact with the database.
@@ -101,7 +103,7 @@ public class StockController extends BaseController {
 	public String displayStockDetail(@PathVariable String symbol, Model model, 
 		HttpServletRequest request) {
 		model.addAttribute("stock", dao.getStockBySymbol(symbol));
-		Date tradeDate = applicationProps.getLastTradeDate();
+		LocalDate tradeDate = applicationProps.getLastTradeDate();
 		SortedSet<Trade> trades = dao.getTradesBySymbolAndDate(symbol, tradeDate);
 		model.addAttribute("trades", getUniqueTrades(trades));
 		long elapsedTime = trades.size() == 0 ? 0 : 
@@ -120,7 +122,7 @@ public class StockController extends BaseController {
 
 	@RequestMapping(value="/{symbol}/trades", method=RequestMethod.GET)
 	public String getStockTrades(@PathVariable String symbol, Model model) {
-		Date tradeDate = applicationProps.getLastTradeDate();
+		LocalDate tradeDate = applicationProps.getLastTradeDate();
 		SortedSet<Trade> trades = dao.getTradesBySymbolAndDate(symbol, tradeDate);
 		model.addAttribute("trades", getUniqueTrades(trades));
 		return "trades";

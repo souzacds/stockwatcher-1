@@ -18,7 +18,6 @@
 package org.stockwatcher.data;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -29,6 +28,8 @@ import org.stockwatcher.domain.Exchange;
 import org.stockwatcher.domain.Industry;
 import org.stockwatcher.domain.Stock;
 import org.stockwatcher.domain.Trade;
+
+import com.datastax.driver.core.LocalDate;
 
 /**
  * DAO interface that provides methods for reading stocks, industries, 
@@ -41,7 +42,7 @@ public interface StockDAO {
 	SortedSet<Industry> getIndustries() throws DAOException;
 	SortedSet<Exchange> getExchanges() throws DAOException;
 	SortedSet<Stock> findStocks(StockCriteria criteria) throws DAOException;
-	SortedSet<Trade> getTradesBySymbolAndDate(String symbol, Date tradeDate) throws DAOException;
+	SortedSet<Trade> getTradesBySymbolAndDate(String symbol, LocalDate tradeDate) throws DAOException;
 	Map<String, BigDecimal> getCurrentPriceForSymbols(String... symbols) throws DAOException;
 	BigDecimal getLastClosePriceForSymbol(String symbol) throws DAOException;
 	List<Stock> getMostWatchedStocks(int limit) throws DAOException;

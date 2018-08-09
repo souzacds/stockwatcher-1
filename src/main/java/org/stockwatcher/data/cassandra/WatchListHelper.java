@@ -46,7 +46,7 @@ public final class WatchListHelper {
 		watchList.setVisibility(Visibility.valueOf(row.getString("visibility")));
 		watchList.setActive(row.getBool("active"));
 		watchList.setCreated(new Date(UUIDs.unixTimestamp(watchList.getId())));
-		watchList.setUpdated(row.getDate("updated"));
+		watchList.setUpdated(DateHelper.toDate(row.getDate("updated")));
 		watchList.setItemCount(itemCount);
 		return watchList;
 	}
@@ -54,7 +54,7 @@ public final class WatchListHelper {
 	public static WatchListItem createWatchListItem(Row row, Stock stock) {
 		WatchListItem item = new WatchListItem(stock);
 		item.setWatchListId(row.getUUID("watchlist_id"));
-		item.setCreated(row.getDate("created"));
+		item.setCreated(DateHelper.toDate(row.getDate("created")));
 		item.setStartPrice(row.getDecimal("start_price"));
 		return item;
 	}

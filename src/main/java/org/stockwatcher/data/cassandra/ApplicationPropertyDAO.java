@@ -18,10 +18,11 @@
 package org.stockwatcher.data.cassandra;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.UUID;
 
 import org.stockwatcher.data.DAOException;
+
+import com.datastax.driver.core.LocalDate;
 
 /**
  * Cassandra-specific DAO interface that provides methods for reading 
@@ -33,7 +34,7 @@ public interface ApplicationPropertyDAO extends org.stockwatcher.data.Applicatio
 	boolean getBoolean(StatementOptions options, String propertyName) throws DAOException;
 	int getInt(StatementOptions options, String propertyName) throws DAOException;
 	long getLong(StatementOptions options, String propertyName) throws DAOException;
-	Date getDate(StatementOptions options, String propertyName) throws DAOException;
+	LocalDate getDate(StatementOptions options, String propertyName) throws DAOException;
 	float getFloat(StatementOptions options, String propertyName) throws DAOException;
 	double getDouble(StatementOptions options, String propertyName) throws DAOException;
 	BigDecimal getDecimal(StatementOptions options, String propertyName) throws DAOException;

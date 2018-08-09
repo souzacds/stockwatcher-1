@@ -49,7 +49,7 @@ public final class StockHelper {
 			row.getString("exchange_id"),
 			createIndustry(row),
 			row.getDecimal("current_price"),
-			row.getDate("price_updated"));
+			DateHelper.toDate(row.getDate("price_updated")));
 	}
 
 	public static Industry createIndustry(Row row) {
@@ -75,7 +75,7 @@ public final class StockHelper {
 	public static Trade createTrade(Row row) {
 		return new Trade(
 			row.getUUID("trade_id"),
-			row.getDate("trade_timestamp"),
+			DateHelper.toDate(row.getDate("trade_timestamp")),
 			row.getString("exchange_id"),
 			row.getString("stock_symbol"),
 			row.getDecimal("share_price"),

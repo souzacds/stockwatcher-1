@@ -47,7 +47,7 @@ public final class UserHelper {
 		user.setEmailAddress(row.getString("email_address"));
 		user.setActive(row.getBool("active"));
 		user.setCreated(new Date(UUIDs.unixTimestamp(userId)));
-		user.setUpdated(row.getDate("updated"));
+		user.setUpdated(DateHelper.toDate(row.getDate("updated")));
 		user.setWatchListCount(watchListCount);
 		return user;
 	}

@@ -17,10 +17,10 @@
  */
 package org.stockwatcher.data;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.datastax.driver.core.LocalDate;
 
 /**
  * Convenience class that provides methods for reading application properties.
@@ -34,7 +34,7 @@ public class ApplicationProperties {
 	@Autowired
 	private ApplicationPropertyDAO dao;
 
-	public Date getLastTradeDate() {
+	public LocalDate getLastTradeDate() {
 		return dao.getDate("last_trade_date");
 	}
 
