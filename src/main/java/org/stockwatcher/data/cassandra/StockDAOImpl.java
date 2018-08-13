@@ -351,8 +351,10 @@ public class StockDAOImpl extends CassandraDAO implements CassandraStockDAO {
 					futures.add(executeAsync(bs, options));
 				}
 			}
-			for(ResultSetFuture future : futures) {
-				stocks.add(createStock(future.getUninterruptibly().one()));
+			for (ResultSetFuture future : futures) {
+				final ResultSet rs = future.getUninterruptibly();
+				if (!future.isDone())
+					stocks.add(createStock(rs.one()));
 			}
 		} catch(DriverException e) {
 			throw new DAOException(e);

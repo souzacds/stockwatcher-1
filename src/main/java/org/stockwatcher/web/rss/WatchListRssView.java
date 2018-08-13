@@ -33,9 +33,9 @@ import org.stockwatcher.domain.User;
 import org.stockwatcher.domain.WatchList;
 import org.stockwatcher.domain.WatchListItem;
 
-import com.sun.syndication.feed.rss.Channel;
-import com.sun.syndication.feed.rss.Description;
-import com.sun.syndication.feed.rss.Item;
+import com.rometools.rome.feed.rss.Channel;
+import com.rometools.rome.feed.rss.Description;
+import com.rometools.rome.feed.rss.Item;
 
 /**
  * View class that generates an RSS feed for a specific WatchList. 
@@ -45,8 +45,7 @@ import com.sun.syndication.feed.rss.Item;
 public class WatchListRssView extends BaseRssView {
 	private static final DecimalFormat CHANGE_FORMAT = new DecimalFormat("0.0");
 	private static final DateFormat CREATED_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-
-	@Override
+@Override
     protected void buildFeedMetadata(Map<String, Object> model, Channel feed,
     	HttpServletRequest request) {
     	WatchList watchList = (WatchList)model.get("watchList");

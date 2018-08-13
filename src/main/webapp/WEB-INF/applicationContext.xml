@@ -21,7 +21,7 @@
 		<property name="keyspace" value="stockwatcher"/>
 		<property name="nodes">
 			<array>
-				<value>192.168.56.101</value>
+				<value>localhost</value>
 			</array>
 		</property>
 	</bean>

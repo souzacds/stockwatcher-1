@@ -11,7 +11,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.springframework.version>3.2.3.RELEASE</org.springframework.version>
+		<org.springframework.version>5.0.8.RELEASE</org.springframework.version>
 	</properties>
 
 	<dependencies>
@@ -52,9 +52,9 @@
 			<version>1.1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>net.java.dev.rome</groupId>
+			<groupId>com.rometools</groupId>
 			<artifactId>rome</artifactId>
-			<version>1.0.0</version>
+			<version>1.5.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -93,6 +93,11 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.5</version>
 		</dependency>
+		<!-- <dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>com.sun.syndication</artifactId>
+			<version>1.0.LIFERAY-PATCHED-1</version>
+		</dependency> -->
 	</dependencies>
 	<repositories>
 		<repository>
@@ -115,7 +120,7 @@
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.1.0.v20131115</version>
+				<version>9.4.12.RC1</version>
 				<configuration>
 					<webApp>
 						<contextPath>/stockwatcher</contextPath>
