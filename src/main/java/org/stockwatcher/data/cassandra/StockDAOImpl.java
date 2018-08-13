@@ -30,6 +30,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -291,13 +292,13 @@ public class StockDAOImpl extends CassandraDAO implements CassandraStockDAO {
 	}
 
 	@Override
-	public SortedSet<Trade> getTradesBySymbolAndDate(String symbol, LocalDate tradeDate) {
+	public SortedSet<Trade> getTradesBySymbolAndDate(String symbol, Date tradeDate) {
 		return getTradesBySymbolAndDate(getDefaultOptions(), symbol, tradeDate);
 	}
 
 	@Override
 	public SortedSet<Trade> getTradesBySymbolAndDate(StatementOptions options,
-			String symbol, LocalDate tradeDate) {
+			String symbol, Date tradeDate) {
 		if(symbol == null || symbol.length() == 0) {
 			throw new IllegalArgumentException("symbol is null or zero length");
 		}
@@ -308,7 +309,7 @@ public class StockDAOImpl extends CassandraDAO implements CassandraStockDAO {
 		try {
 			BoundStatement bs = selectTradesBySymbolAndDate.bind();
 			bs.setString("stock_symbol", symbol);
-			bs.setDate("trade_date", tradeDate);
+			bs.setTimestamp("trade_date", tradeDate);
 			for(Row row : execute(bs, options)) {
 				trades.add(createTrade(row));
 			}

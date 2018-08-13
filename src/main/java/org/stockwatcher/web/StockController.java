@@ -103,7 +103,7 @@ public class StockController extends BaseController {
 	public String displayStockDetail(@PathVariable String symbol, Model model, 
 		HttpServletRequest request) {
 		model.addAttribute("stock", dao.getStockBySymbol(symbol));
-		LocalDate tradeDate = applicationProps.getLastTradeDate();
+		Date tradeDate = applicationProps.getLastTradeDate();
 		SortedSet<Trade> trades = dao.getTradesBySymbolAndDate(symbol, tradeDate);
 		model.addAttribute("trades", getUniqueTrades(trades));
 		long elapsedTime = trades.size() == 0 ? 0 : 
@@ -122,7 +122,7 @@ public class StockController extends BaseController {
 
 	@RequestMapping(value="/{symbol}/trades", method=RequestMethod.GET)
 	public String getStockTrades(@PathVariable String symbol, Model model) {
-		LocalDate tradeDate = applicationProps.getLastTradeDate();
+		Date tradeDate = applicationProps.getLastTradeDate();
 		SortedSet<Trade> trades = dao.getTradesBySymbolAndDate(symbol, tradeDate);
 		model.addAttribute("trades", getUniqueTrades(trades));
 		return "trades";

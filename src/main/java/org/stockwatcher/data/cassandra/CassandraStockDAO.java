@@ -18,6 +18,7 @@
 package org.stockwatcher.data.cassandra;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -31,8 +32,6 @@ import org.stockwatcher.domain.Industry;
 import org.stockwatcher.domain.Stock;
 import org.stockwatcher.domain.Trade;
 
-import com.datastax.driver.core.LocalDate;
-
 /**
  * Cassandra-specific DAO interface that provides methods for reading 
  * exchanges, industries, stocks and trades.
@@ -44,7 +43,7 @@ public interface CassandraStockDAO extends org.stockwatcher.data.StockDAO {
 	SortedSet<Industry> getIndustries(StatementOptions options) throws DAOException;
 	SortedSet<Exchange> getExchanges(StatementOptions options) throws DAOException;
 	SortedSet<Stock> findStocks(StatementOptions options, StockCriteria criteria) throws DAOException;
-	SortedSet<Trade> getTradesBySymbolAndDate(StatementOptions options, String symbol, LocalDate tradeDate) throws DAOException;
+	SortedSet<Trade> getTradesBySymbolAndDate(StatementOptions options, String symbol, Date tradeDate) throws DAOException;
 	Map<String, BigDecimal> getCurrentPriceForSymbols(StatementOptions options, String... symbols) throws DAOException;
 	BigDecimal getLastClosePriceForSymbol(StatementOptions options, String symbol) throws DAOException;
 	List<Stock> getMostWatchedStocks(StatementOptions options, int limit) throws DAOException;

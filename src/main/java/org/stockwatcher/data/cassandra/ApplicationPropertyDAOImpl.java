@@ -97,13 +97,13 @@ public class ApplicationPropertyDAOImpl extends CassandraDAO implements Applicat
 	}
 
 	@Override
-	public LocalDate getDate(String propertyName) {
+	public Date getDate(String propertyName) {
 		return getDate(getDefaultOptions(), propertyName);
 	}
 
 	@Override
-	public LocalDate getDate(StatementOptions options, String propertyName) {
-		return getRow(options, selectTimestampProperty, propertyName).getDate(0);
+	public Date getDate(StatementOptions options, String propertyName) {
+		return getRow(options, selectTimestampProperty, propertyName).getTimestamp(0);
 	}
 
 	@Override
