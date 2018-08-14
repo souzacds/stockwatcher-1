@@ -33,4 +33,5 @@ public interface CassandraUserDAO extends org.stockwatcher.data.UserDAO {
 	SortedSet<User> getUsers(StatementOptions options) throws DAOException;
 	User getUser(StatementOptions options, UUID id) throws DAOException;
 	User updateUser(StatementOptions options, User user) throws DAOException;
+	User insertUser(StatementOptions options, User user) throws DAOException;
 }

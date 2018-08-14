@@ -353,7 +353,7 @@ public class WatchListDAOImpl extends CassandraDAO implements CassandraWatchList
 			BoundStatement bs = insertWatchListItem.bind();
 			bs.setUUID("watchlist_id", id);
 			bs.setString("stock_symbol", stockSymbol);
-			bs.setDate("created", now);
+			bs.setTimestamp("created", d);
 			bs.setDecimal("start_price", stock.getCurrentPrice());
 
 			/*******

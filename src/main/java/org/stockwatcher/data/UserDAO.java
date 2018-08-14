@@ -31,4 +31,5 @@ public interface UserDAO {
 	SortedSet<User> getUsers() throws DAOException;
 	User getUser(UUID id) throws DAOException;
 	User updateUser(User user) throws DAOException;
+	User insertUser(User user);
 }

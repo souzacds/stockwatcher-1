@@ -30,6 +30,7 @@ import java.util.UUID;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 import org.stockwatcher.data.DAOException;
 import org.stockwatcher.domain.User;
@@ -39,6 +40,7 @@ import com.datastax.driver.core.PreparedStatement;
 import com.datastax.driver.core.Row;
 import com.datastax.driver.core.Statement;
 import com.datastax.driver.core.exceptions.DriverException;
+import com.datastax.driver.core.utils.UUIDs;
 
 /**
  * Implementation of the UserDAO interface for Apache Cassandra.
@@ -53,10 +55,13 @@ public class UserDAOImpl extends CassandraDAO implements CassandraUserDAO {
 	private PreparedStatement selectUserById;
 	private PreparedStatement selectUsers;
 
+	private PreparedStatement insertUser;
+
 	@PostConstruct
 	public void init() {
 		selectUserById = prepare("SELECT user_id, first_name, last_name, display_name, postal_code, email_address, active, updated FROM User WHERE user_id=?");
 		selectUsers = prepare("SELECT user_id, first_name, last_name, display_name, postal_code, email_address, active, updated FROM User");
+		insertUser = prepare("INSERT INTO User (user_id, first_name, last_name, display_name, postal_code, email_address, active, updated) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 	}
 
 	@Override
@@ -136,6 +141,24 @@ public class UserDAOImpl extends CassandraDAO implements CassandraUserDAO {
 			throw new DAOException(e);
 		}
 		user.setUpdated(now);
+		return user;
+	}
+
+	@Override
+	public User insertUser(User user) {
+		return this.insertUser(getDefaultOptions(), user);
+	}
+
+	@Override
+	public User insertUser(StatementOptions options, @NonNull User user) throws DAOException {
+
+		final UUID uuid = UUIDs.timeBased();
+		user.setActive(true);
+		user.setCreated(new Date());
+		user.setId(uuid);
+		Statement statement = insertUser.bind(uuid,user.getFirstName(),user.getLastName(),user.getDisplayName(),user.getPostalCode(),user.getEmailAddress(),user.isActive(),user.getCreated());
+		execute(statement, options);
+		
 		return user;
 	}
 }
